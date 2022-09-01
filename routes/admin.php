@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +16,13 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('welcome');
-});
-
 Route::prefix('admin')->middleware([])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/registered-user', [AdminController::class, 'registerUser'])->name('admin.register.user');
+    Route::get('/registered-user/{id}', [AdminController::class, 'registerUserEdit'])->name('admin.register.user.edit');
+    Route::put('/registered-user/{id}', [AdminController::class, 'registerUserUpdate'])->name('admin.register.user.update');
     Route::resources([
-        'quiz' => QuizController::class,
+        'question' => QuestionController::class,
     ]);
 });
 

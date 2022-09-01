@@ -9,7 +9,13 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title">Quiz</li>
                 <li>
-                    <a href="{{ route('quiz.create') }}" class="waves-effect active">
+                    <a href="{{ route('admin.register.user') }}" class="waves-effect active">
+                        <i class="bx bx-home-circle"></i>
+                        <span>User Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('question.create') }}" class="waves-effect active">
                         <i class="bx bx-home-circle"></i>
                         <span>Add Questions</span>
                     </a>

@@ -15,6 +15,7 @@
 @section('body')
 
 <body data-sidebar="dark">
+
     @show
     <!-- Begin page -->
     <div id="layout-wrapper">
@@ -26,6 +27,9 @@
         <div class="main-content">
             <div class="page-content">
                 <div class="container-fluid">
+                    @if(Session::has('message'))
+                    <p class="alert alert-success">{{ Session::get('message') }}</p>
+                    @endif
                     @yield('content')
                 </div>
                 <!-- container-fluid -->

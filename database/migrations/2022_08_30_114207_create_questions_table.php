@@ -16,7 +16,8 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Option::class)->constrained('options')->
+            $table->string('title');
+            $table->string('is_active')->default(1);
             $table->timestamps();
         });
     }
