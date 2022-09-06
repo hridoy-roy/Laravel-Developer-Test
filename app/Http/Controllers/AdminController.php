@@ -10,7 +10,10 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.index');
+        $data = [
+            'users' => User::where('type', '=', 'user')->get()->count(),
+        ];
+        return view('admin.index', $data);
     }
 
     public function registerUser()
