@@ -6,7 +6,7 @@
 
 @component('components.breadcrumd')
 @slot('li_1') Users @endslot
-@slot('title') Data Tables @endslot
+@slot('title') Data @endslot
 @endcomponent
 
 <div class="row">
@@ -14,11 +14,8 @@
         <div class="card">
             <div class="card-body">
 
-                <h4 class="card-title">Default Datatable</h4>
-                <p class="card-title-desc">DataTables has most features enabled by
-                    default, so all you need to do to use it with your own tables is to call
-                    the construction function: <code>$().DataTable();</code>.
-                </p>
+                <h4 class="card-title">All Users Data</h4>
+                <p class="card-title-desc"></p>
 
 
                 <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
@@ -40,26 +37,32 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>
                             <td>{{ $user->status ? 'Approved': 'Rejected' }}</td>
-                            <td>
+                            <td class="d-flex">
                                 <a href="{{ route('admin.register.user.edit',$user->id) }}"
                                     class="btn btn-primary waves-effect waves-light">
-                                    <i class="bx bx-smile font-size-16 align-middle"></i>
+                                    <i class="bx bx-edit font-size-20 align-middle"></i>
                                 </a>
-                                <button type="button" class="btn btn-primary waves-effect waves-light">
-                                    <i class="bx bx-smile font-size-16 align-middle"></i>
-                                </button>
-                                <a href="" class="btn btn-primary waves-effect waves-light">
-                                    <i class="bx bx-smile font-size-16 align-middle"></i>
+                                <form action="{{ route('user.destroy',$user->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-primary waves-effect waves-light" type="submit"><i
+                                            class="bx bx-block font-size-20 align-middle"></i></button>
+                                </form>
+                                {{-- <a href="{{ route('admin.register.user.edit',$user->id) }}"
+                                    class="btn btn-primary waves-effect waves-light">
+
+                                </a> --}}
+                                <a href="{{ route('user.details',$user->id) }}"
+                                    class="btn btn-primary waves-effect waves-light">
+                                    <i class="bx bxs-data font-size-20 align-middle"></i>
                                 </a>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td></td>
+                            <td colspan="5" class="text-center pt-3">
+                                <h3>No data Found</h3>
+                            </td>
                         </tr>
                         @endforelse
                     </tbody>

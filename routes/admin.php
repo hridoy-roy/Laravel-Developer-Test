@@ -16,11 +16,14 @@ use App\Http\Controllers\QuestionController;
 |
 */
 
-Route::prefix('admin')->middleware([])->group(function () {
+Route::prefix('admin')->middleware(['admin', 'auth'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/registered-user', [AdminController::class, 'registerUser'])->name('admin.register.user');
     Route::get('/registered-user/{id}', [AdminController::class, 'registerUserEdit'])->name('admin.register.user.edit');
     Route::put('/registered-user/{id}', [AdminController::class, 'registerUserUpdate'])->name('admin.register.user.update');
+    Route::delete('/registered-user/{id}', [AdminController::class, 'registerUserDestroy'])->name('user.destroy');
+    Route::get('/registered-user-details/{id}', [AdminController::class, 'registerUserDetails'])->name('user.details');
+
     Route::resources([
         'question' => QuestionController::class,
     ]);

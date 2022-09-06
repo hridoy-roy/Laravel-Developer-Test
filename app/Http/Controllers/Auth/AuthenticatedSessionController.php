@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
+use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -32,7 +34,31 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $isAdmin = $this->isAdmin($request);
+
+        if ($isAdmin) {
+            return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+    }
+
+    private function isAdmin($data)
+    {
+        $admin = User::where('email', $data->email)->get()->toArray();
+
+        foreach ($admin as $key => $value) {
+            if ($value['type'] == 'admin') {
+                $isAdmin = true;
+                break;
+            }
+            $isAdmin = false;
+        }
+        if ($isAdmin) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

@@ -17,7 +17,7 @@ class AdminController extends Controller
     {
 
         $data = [
-            'users' => User::where('id', '!=', 1)->get(),
+            'users' => User::where('type', '=', 'user')->get(),
         ];
 
         return view('admin.register-user', $data);
@@ -43,7 +43,7 @@ class AdminController extends Controller
 
         $status = $request->status ? 1 : 0;
 
-        $user = User::where('id', $id)
+        User::where('id', $id)
             ->update([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -53,6 +53,22 @@ class AdminController extends Controller
             ]);
 
         Session::flash('message', 'Updated');
+
+        return redirect()->route('admin.register.user');
+    }
+
+    public function registerUserDetails($id)
+    {
+
+        $data = [
+            'user' => User::select('id', 'name', 'email', 'phone', 'cv_link', 'status')->where('id', $id)->first()
+        ];
+        return view('admin.register-user-details', $data);
+    }
+    public function registerUserDestroy($id)
+    {
+        User::find($id)->delete();
+        Session::flash('message', 'Deleted');
 
         return redirect()->route('admin.register.user');
     }

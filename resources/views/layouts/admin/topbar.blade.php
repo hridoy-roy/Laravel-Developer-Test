@@ -2,7 +2,7 @@
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
-            {{-- <div class="navbar-brand-box">
+            <div class="navbar-brand-box">
                 <a href="index" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="{{ asset('/assets/images/logo.svg') }}" alt="" height="22">
@@ -20,7 +20,7 @@
                         <img src="{{ asset('/assets/images/logo-light.png') }}" alt="" height="19">
                     </span>
                 </a>
-            </div> --}}
+            </div>
 
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
@@ -44,9 +44,16 @@
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user"
                         src="{{ asset('/assets/images/users/avatar-1.jpg') }}" alt="Header Avatar">
-                    {{-- <span class="d-none d-xl-inline-block ms-1"
-                        key="t-henry">{{ucfirst(Auth::user()->name)}}</span> --}}
+                    <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ucfirst(Auth::user()->name)}}</span>
                 </button>
+                <form class="btn header-item waves-effect" method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="btn pt-3" type="submit">Log Out</button>
+                    {{-- <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </x-responsive-nav-link> --}}
+                </form>
             </div>
         </div>
     </div>

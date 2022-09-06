@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('cv_link')->nullable();
             $table->boolean('status')->default(0);
             $table->timestamp('email_verified_at')->nullable();
+            $table->enum('type', ['admin', 'user'])->default('user');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
