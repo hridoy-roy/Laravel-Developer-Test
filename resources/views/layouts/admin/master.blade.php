@@ -10,12 +10,12 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
     @include('layouts.admin.head-css')
+    @livewireStyles
 </head>
 
 @section('body')
 
 <body data-sidebar="dark">
-
     @show
     <!-- Begin page -->
     <div id="layout-wrapper">
@@ -43,6 +43,7 @@
 
     <!-- JAVASCRIPT -->
     @include('layouts.admin.vendor-scripts')
+    @livewireScripts
 </body>
 
 </html>
