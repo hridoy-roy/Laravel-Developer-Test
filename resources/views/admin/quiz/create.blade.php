@@ -2,17 +2,24 @@
 
 @section('title') Quiz @endsection
 
+@section('css')
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/toastr/toastr.min.css') }}">
+
+<!-- DataTables -->
+<link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
 @section('content')
 
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Default Tabs</h4>
-                <p class="card-title-desc">Use the tab JavaScript plugin—include
+                <h4 class="card-title mb-3">CREATE QUESTION SECTION</h4>
+                {{-- <p class="card-title-desc">Use the tab JavaScript plugin—include
                     it individually or through the compiled <code class="highlighter-rouge">bootstrap.js</code>
                     file—to extend our navigational tabs and pills to create tabbable panes
-                    of local content, even via dropdown menus.</p>
+                    of local content, even via dropdown menus.</p> --}}
 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
@@ -36,15 +43,7 @@
                         <livewire:question-create>
                     </div>
                     <div class="tab-pane" id="profile" role="tabpanel">
-                        <p class="mb-0">
-                            Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-                            single-origin coffee squid. Exercitation +1 labore velit, blog
-                            sartorial PBR leggings next level wes anderson artisan four loko
-                            farm-to-table craft beer twee. Qui photo booth letterpress,
-                            commodo enim craft beer mlkshk aliquip jean shorts ullamco ad
-                            vinyl cillum PBR. Homo nostrud organic, assumenda labore
-                            aesthetic magna delectus.
-                        </p>
+                        <livewire:question-list>
                     </div>
                 </div>
 
@@ -56,4 +55,16 @@
 
 @section('script')
 
+<!-- toastr plugin -->
+<script src="{{ asset('assets/libs/toastr/toastr.min.js') }}"></script>
+
+<!-- toastr init -->
+<script src="{{ asset('assets/js/pages/toastr.init.js') }}"></script>
+
+<!-- Required datatable js -->
+<script src="{{asset('assets/libs/datatables/datatables.min.js') }}"></script>
+<script src="{{asset('assets/libs/jszip/jszip.min.js') }}"></script>
+<script src="{{asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+<!-- Datatable init js -->
+<script src="{{asset('assets/js/pages/datatables.init.js') }}"></script>
 @endsection

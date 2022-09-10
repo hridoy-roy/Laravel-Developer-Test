@@ -8,9 +8,7 @@ use Illuminate\Support\Arr;
 
 class QuestionCreate extends Component
 {
-
     public $input = 0;
-
     public $title;
     public $status = true;
     public array $option = [];
@@ -22,15 +20,24 @@ class QuestionCreate extends Component
     {
         $this->input++;
         $this->option[$this->input] = null;
-        $this->ans[$this->input] = false;
+        $this->ans[$this->input] = null;
     }
 
     public function delete($key)
     {
-        if (isset($this->option[$key]))
+        if (isset($this->option[$key])) {
             unset($this->option[$key]);
-        if (isset($this->ans[$key]))
+            [$keys, $values] = Arr::divide($this->option);
+            $this->option = $values;
+        }
+
+        if (isset($this->ans[$key])) {
             unset($this->ans[$key]);
+            [$keys, $values] = Arr::divide($this->ans);
+            $this->ans = $values;
+        }
+
+
         $this->input--;
     }
 
@@ -58,9 +65,10 @@ class QuestionCreate extends Component
 
         [$title, $options] = $this->separateOptionAndTitle($questionDetails);
         $questionData = Question::create($title);
-
         $questionData->option()->createMany($options);
-        
+        $this->emit('questionAdded');
+        session()->flash('message', 'Question successfully Saved.');
+        $this->reset();
     }
 
     public function separateOptionAndTitle($validate)
@@ -72,7 +80,7 @@ class QuestionCreate extends Component
         for ($i = 0; $i < count($optionsData['option']); $i++) {
             $options[] = [
                 'option' => $optionsData['option'][$i],
-                'is_ans' => $optionsData['ans'][$i]
+                'is_ans' => isset($optionsData['ans'][$i]) ? 1 : 0,
             ];
         }
 

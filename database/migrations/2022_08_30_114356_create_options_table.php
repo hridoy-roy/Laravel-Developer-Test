@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Question::class)->constrained('questions')->cascadeOnDelete();
             $table->string('option');
-            $table->boolean('is_ans')->default(0);
+            $table->string('is_ans');
             $table->timestamps();
         });
     }
