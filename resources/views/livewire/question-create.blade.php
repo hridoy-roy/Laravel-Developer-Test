@@ -1,4 +1,12 @@
 <div>
+    <div class="text-center mb-5">
+        @if ($errors->any())
+        <h4>All Error Message</h4>
+        @foreach ($errors->all() as $error)
+        <span class="error">{{ $error }}</span><br />
+        @endforeach
+        @endif
+    </div>
     <form wire:submit.prevent="submit">
         <div class="row mb-4">
             <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Question
@@ -27,21 +35,23 @@
                 <label for="subject">Action</label>
             </div>
         </div>
-        @for ($i = 1; $i <= $input; $i++) <div class="row">
+        @for ($i = 0; $i <= $input; $i++) <div class="row">
             <div class="mb-3 col-lg-3">
-                <label for="name">Option {{ $i }}</label>
+                <label for="name">Option {{ $i + 1 }}</label>
             </div>
 
             <div class="mb-3 col-lg-6">
-                <input type="text" wire:model="option.{{ $i }}" class="form-control" placeholder="Option {{ $i }}" />
+                <input type="text" wire:model="option.{{ $i }}" class="form-control" placeholder="Option {{ $i + 1 }}"
+                    value="" />
             </div>
 
             <div class="mb-3 col-lg-1 form-check d-flex justify-content-center">
-                <input class="form-check-input" wire:model="ans.{{ $i }}" type="checkbox">
+                <input class="form-check-input" wire:model="ans.{{ $i }}" type="checkbox" value="">
             </div>
 
             <div class="mb-3 col-lg-2 align-self-center">
-                <span class="btn btn-primary" wire:click="delete">Delete</span>
+                @if ($i > 0) <span class="btn btn-primary" wire:click="delete({{ $i }})">Delete</span>
+                @endif
             </div>
 </div>
 @endfor
@@ -51,10 +61,8 @@
 <div class="row">
     <div class="col-sm-9">
         <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label">
-                Active/Deactive
-            </label>
+            <input class="form-check-input" wire:model="status" type="checkbox">
+            <label class="form-check-label"> Status </label>
         </div>
 
         <div>

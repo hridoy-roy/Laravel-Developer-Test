@@ -4,23 +4,33 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Question;
+use Illuminate\Support\Arr;
 
 class QuestionCreate extends Component
 {
 
-    public $input = 1;
+    public $input = 0;
 
     public $title;
-    public $option;
-    public $ans;
+    public $status = true;
+    public array $option = [];
+    public array $ans = [];
+
+
 
     public function addOption()
     {
         $this->input++;
+        $this->option[$this->input] = null;
+        $this->ans[$this->input] = false;
     }
 
-    public function delete()
+    public function delete($key)
     {
+        if (isset($this->option[$key]))
+            unset($this->option[$key]);
+        if (isset($this->ans[$key]))
+            unset($this->ans[$key]);
         $this->input--;
     }
 
@@ -29,7 +39,8 @@ class QuestionCreate extends Component
         return [
             'title' => 'required',
             'option.*' => 'required',
-            'ans.*' => 'required',
+            'ans.*' => 'nullable',
+            'status' => 'nullable',
         ];
     }
 
@@ -44,20 +55,31 @@ class QuestionCreate extends Component
         $questionDetails = $this->validate();
 
         // Execution doesn't reach here if validation fails.
-        dump($questionDetails);
 
         [$title, $options] = $this->separateOptionAndTitle($questionDetails);
-        dd($title, $options);
+        $questionData = Question::create($title);
 
-        $questionData = Question::create($this->validate());
+        $questionData->option()->createMany($options);
+        
     }
 
     public function separateOptionAndTitle($validate)
     {
-        dd($validate);
-        
-        // return  [$title, $options];
+        $title = Arr::only($validate, ['title']);
+        $optionsData = Arr::only($validate, ['option', 'ans']);
+
+
+        for ($i = 0; $i < count($optionsData['option']); $i++) {
+            $options[] = [
+                'option' => $optionsData['option'][$i],
+                'is_ans' => $optionsData['ans'][$i]
+            ];
+        }
+
+        return  [$title, $options];
     }
+
+
     public function render()
     {
         return view('livewire.question-create');

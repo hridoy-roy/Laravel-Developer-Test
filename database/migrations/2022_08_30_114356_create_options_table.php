@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('options', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Question::class)->constrained('questions')->cascadeOnDelete();
-            $table->string('option_name');
+            $table->string('option');
             $table->boolean('is_ans')->default(0);
             $table->timestamps();
         });
