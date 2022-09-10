@@ -25,7 +25,7 @@
                 <td>{{ $question->is_active ? "Active": "Deactive"}}</td>
                 <td>{{ $question->created_at }}</td>
                 <td>
-                    <a href="{{ route('admin.register.user.edit',$user->id) }}"
+                    <a href="{{ route('question.edit',$question->id) }}"
                         class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-edit font-size-20 align-middle"></i>
                     </a>

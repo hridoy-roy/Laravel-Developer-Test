@@ -58,7 +58,11 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        $data = [
+            'questionEdit' => $question,
+        ];
+
+        return view('admin.quiz.edit', $data);
     }
 
     /**
