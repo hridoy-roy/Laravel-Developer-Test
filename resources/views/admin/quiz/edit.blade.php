@@ -19,7 +19,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content p-3 text-muted">
                     <div class="tab-pane active" id="home" role="tabpanel">
-                        <livewire:question-create model:>
+                        <livewire:question-create mode='edit' :data="$questionEdit">
                     </div>
                 </div>
 

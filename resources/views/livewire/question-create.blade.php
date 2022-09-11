@@ -74,16 +74,22 @@
             <h5 class="form-check-label">Question Status </h5>
         </div>
         <div class="square-switch">
-            <input type="checkbox" id="square-switch1" wire:model="status" switch="none" checked />
+            <input type="checkbox" id="square-switch1" wire:model="status" switch="none" />
             <label for="square-switch1" data-on-label="On" data-off-label="Off"></label>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-12 text-center">
+        @if ($mode == 'edit')
+        <div>
+            <button wire:click="update" class="btn btn-success btn-lg waves-effect waves-light">Update Question</button>
+        </div>
+        @else
         <div>
             <button type="submit" class="btn btn-success btn-lg waves-effect waves-light">Submit Question</button>
         </div>
+        @endif
     </div>
 </div>
 </form>

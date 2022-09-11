@@ -9,10 +9,14 @@ use Illuminate\Support\Arr;
 class QuestionCreate extends Component
 {
     public $input = 0;
+    public $questionId;
     public $title;
+    public $mode;
     public $status = true;
     public array $option = [];
     public array $ans = [];
+    public $data;
+    // public Question $question;
 
 
 
@@ -71,9 +75,27 @@ class QuestionCreate extends Component
         $this->reset();
     }
 
+
+    public function mount()
+    {
+        if ($this->data) {
+            $this->questionId = $this->data->id;
+            $this->title = $this->data->title;
+            $this->is_active = $this->data->is_active;
+
+            $options = $this->data->find($this->data->id)->option->toArray();
+            $this->input = count($options) - 1;
+
+            foreach ($options as $key => $value) {
+                $this->option[$key] = $value['option'];
+                $this->ans[$key] = $value['is_ans'];
+            }
+        }
+    }
+
     public function separateOptionAndTitle($validate)
     {
-        $title = Arr::only($validate, ['title']);
+        $title = Arr::only($validate, ['title', 'status']);
         $optionsData = Arr::only($validate, ['option', 'ans']);
 
 
@@ -86,6 +108,27 @@ class QuestionCreate extends Component
 
         return  [$title, $options];
     }
+
+
+    public function update()
+    {
+        $questionDetailsUpdate = $this->validate();
+        [$title, $options] = $this->separateOptionAndTitle($questionDetailsUpdate);
+        $question = Question::find($this->questionId);
+
+        $questionData = $this->$question->update($title);
+        $questionData->find($this->questionId)->option->delete();
+        $questionData->option()->createMany($options);
+        $this->emit('questionAdded');
+        session()->flash('message', 'Question successfully Updated.');
+        $this->reset();
+    }
+
+    // public function deleteQuestion()
+    // {
+    //     dd($this->question);
+    //     $this->question->delete();
+    // }
 
 
     public function render()

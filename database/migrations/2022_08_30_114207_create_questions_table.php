@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('is_active')->default(1);
+            $table->string('status')->default(1);
             $table->timestamps();
         });
     }
