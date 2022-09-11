@@ -29,6 +29,10 @@
                         class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-edit font-size-20 align-middle"></i>
                     </a>
+                    <button wire:click='deleteQuestion({{ $question->id }})'
+                        class="btn btn-primary waves-effect waves-light">
+                        <i class="bx bx-edit font-size-20 align-middle"></i>
+                    </button>
                 </td>
             </tr>
             @empty

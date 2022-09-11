@@ -81,7 +81,7 @@ class QuestionCreate extends Component
         if ($this->data) {
             $this->questionId = $this->data->id;
             $this->title = $this->data->title;
-            $this->is_active = $this->data->is_active;
+            $this->status = $this->data->status;
 
             $options = $this->data->find($this->data->id)->option->toArray();
             $this->input = count($options) - 1;
@@ -116,20 +116,16 @@ class QuestionCreate extends Component
         [$title, $options] = $this->separateOptionAndTitle($questionDetailsUpdate);
         $question = Question::find($this->questionId);
 
-        $questionData = $this->$question->update($title);
-        $questionData->find($this->questionId)->option->delete();
-        $questionData->option()->createMany($options);
+        $question->title = $title['title'];
+        $question->status = $title['status'];
+        $question->update();
+
+        $question->option()->delete();
+        $question->option()->createMany($options);
         $this->emit('questionAdded');
         session()->flash('message', 'Question successfully Updated.');
-        $this->reset();
+        return redirect()->route('question.create');
     }
-
-    // public function deleteQuestion()
-    // {
-    //     dd($this->question);
-    //     $this->question->delete();
-    // }
-
 
     public function render()
     {
