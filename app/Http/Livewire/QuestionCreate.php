@@ -98,11 +98,10 @@ class QuestionCreate extends Component
         $title = Arr::only($validate, ['title', 'status']);
         $optionsData = Arr::only($validate, ['option', 'ans']);
 
-
         for ($i = 0; $i < count($optionsData['option']); $i++) {
             $options[] = [
                 'option' => $optionsData['option'][$i],
-                'is_ans' => isset($optionsData['ans'][$i]) ? 1 : 0,
+                'is_ans' => ($optionsData['ans'][$i]==true) ? 1 : 0,
             ];
         }
 
@@ -116,9 +115,10 @@ class QuestionCreate extends Component
         [$title, $options] = $this->separateOptionAndTitle($questionDetailsUpdate);
         $question = Question::find($this->questionId);
 
-        $question->title = $title['title'];
-        $question->status = $title['status'];
-        $question->update();
+        $question->update([
+            'title' => $title['title'],
+            'status' => $title['status']
+        ]);
 
         $question->option()->delete();
         $question->option()->createMany($options);
