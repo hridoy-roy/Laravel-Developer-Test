@@ -101,7 +101,8 @@ class QuestionCreate extends Component
         for ($i = 0; $i < count($optionsData['option']); $i++) {
             $options[] = [
                 'option' => $optionsData['option'][$i],
-                'is_ans' => ($optionsData['ans'][$i]==true) ? 1 : 0,
+                'is_ans' => ($optionsData['ans'][$i] == true) ? 1 : 0,
+
             ];
         }
 
@@ -118,6 +119,7 @@ class QuestionCreate extends Component
         $question->update([
             'title' => $title['title'],
             'status' => $title['status']
+
         ]);
 
         $question->option()->delete();
