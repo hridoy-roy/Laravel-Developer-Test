@@ -83,7 +83,7 @@
     <div class="col-12 text-center">
         @if ($mode == 'edit')
         <div>
-            <button wire:click="update" class="btn btn-success btn-lg waves-effect waves-light">Update Question</button>
+            <span wire:click="update" class="btn btn-success btn-lg waves-effect waves-light">Update Question</span>
         </div>
         @else
         <div>
